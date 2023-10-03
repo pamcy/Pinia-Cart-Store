@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import products from "@/data/products.json";
 
 export const useProductStore = defineStore("ProductStore", {
   // * state
@@ -7,7 +6,7 @@ export const useProductStore = defineStore("ProductStore", {
   // This allows Pinia to work in both Server and Client Side.
   state: () => {
     return {
-      products,
+      products: [],
     };
   },
 
@@ -16,6 +15,16 @@ export const useProductStore = defineStore("ProductStore", {
 
   // * actions
   // as the methods
-});
+  actions: {
+    async fetchProducts() {
+      // default 是 JSON 文件的預設匯出
+      // https://javascript.info/modules-dynamic-imports
+      this.products = (await import("@/data/products.json")).default;
 
-// Question 1: where to put fetchProducts()?
+      // demo with fetch api
+      //   this.products = await fetch("https://fakestoreapi.com/products").then(
+      //     (res) => res.json()
+      //   );
+    },
+  },
+});

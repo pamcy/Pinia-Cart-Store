@@ -6,6 +6,9 @@ import ProductCard from "@/components/ProductCard.vue";
 
 const productStore = useProductStore();
 
+// call the action as a method of the store
+productStore.fetchProducts();
+
 /*
 
 // Destructuring from a Store

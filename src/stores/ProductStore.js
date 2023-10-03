@@ -12,5 +12,10 @@ export const useProductStore = defineStore("ProductStore", {
   },
 
   // * getters
+  // as the computed properties
+
   // * actions
+  // as the methods
 });
+
+// Question 1: where to put fetchProducts()?

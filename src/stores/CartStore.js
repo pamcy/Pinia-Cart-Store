@@ -6,7 +6,24 @@ export const useCartStore = defineStore("CartStore", {
       items: [],
     };
   },
+  getters: {
+    totalCounts: (state) => state.items.length,
+
+    isCartEmpty: (state) => state.totalCounts === 0,
+
+    /*
+    // demo with regular function **
+
+    totalCounts() {
+      return this.items.length;
+    },
+    isCartEmpty() {
+      return this.totalCounts === 0;
+    },
+    */
+  },
   actions: {
+    // actions 不能用 arrow function
     addItemsToCart(count, item) {
       count = parseInt(count);
 

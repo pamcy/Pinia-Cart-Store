@@ -38,7 +38,38 @@ export const useCartStore = defineStore("CartStore", {
         obj[item.name].push(item);
 
         return obj;
+
+        // return obj data structure
+        // {
+        //   "Pineapple Gum": [
+        //     {
+        //       "name": "Pineapple Gum",
+        //       "image": "pineapple-gum.jpg",
+        //       "price": 3
+        //     }
+        //   ],
+        //   "Dried Pineapple": [
+        //     {
+        //       "name": "Dried Pineapple",
+        //       "image": "pineapple-dried.jpg",
+        //       "price": 5
+        //     }, {
+        //       "name": "Dried Pineapple",
+        //       "image": "pineapple-dried.jpg",
+        //       "price": 5
+        //     }
+        //   ]
+        // }
       }, {});
+    },
+
+    /**
+     * @returns {Function} A function that takes an item name and returns the count of items with that name in the cart.
+     */
+    grouppedItemsWithCount: (state) => {
+      // dynamic getter with return function
+      // https://pinia.vuejs.org/core-concepts/getters.html#Passing-arguments-to-getters
+      return (name) => state.groupedItems[name].length;
     },
 
     /*

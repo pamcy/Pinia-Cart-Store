@@ -23,14 +23,10 @@ const active = ref(false);
       <div v-if="!cartStore.isCartEmpty">
         <ul class="items-in-cart">
           <CartItem
-            :product="{ name: 'Dried Pineapple', price: 5 }"
-            :count="5"
-            @updateCount=""
-            @clear=""
-          />
-          <CartItem
-            :product="{ name: 'Pineapple Gum', price: 3 }"
-            :count="5"
+            v-for="(items, name) in cartStore.groupedItems"
+            :key="name"
+            :product="items[0]"
+            :count="cartStore.grouppedItemsWithCount(name)"
             @updateCount=""
             @clear=""
           />
@@ -44,11 +40,11 @@ const active = ref(false);
         </div>
       </div>
 
-      <!-- Uncomment and use condition to show when cart is empty -->
       <div v-else><em>Cart is Empty</em></div>
     </AppModalOverlay>
   </div>
 </template>
+
 <style lang="pcss" scoped>
 .items-in-cart{
   @apply mb-5;

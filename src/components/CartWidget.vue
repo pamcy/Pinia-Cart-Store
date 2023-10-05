@@ -35,7 +35,14 @@ const active = ref(false);
           Total: <strong>$40</strong>
         </div>
         <div class="flex justify-end">
-          <AppButton class="secondary mr-2">Clear Cart</AppButton>
+          <!--
+            $reset(): reset the state to its initial value
+
+            this calls the state() function to create a new state object and replaces the current state with it.
+          -->
+          <AppButton class="secondary mr-2" @click="cartStore.$reset()"
+            >Clear Cart</AppButton
+          >
           <AppButton class="primary">Checkout</AppButton>
         </div>
       </div>

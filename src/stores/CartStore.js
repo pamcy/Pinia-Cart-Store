@@ -72,6 +72,10 @@ export const useCartStore = defineStore("CartStore", {
       return (name) => state.groupedItems[name].length;
     },
 
+    totalPrice: (state) => {
+      return state.items.reduce((total, item) => total + item.price, 0);
+    },
+
     /*
     // demo with regular function **
 
@@ -100,6 +104,9 @@ export const useCartStore = defineStore("CartStore", {
           ...item,
         });
       }
+    },
+    removeItem(name) {
+      this.items = this.items.filter((item) => item.name !== name);
     },
   },
 });

@@ -30,7 +30,7 @@ export const useCartStore = defineStore("CartStore", {
      * @returns {Object} An object with items grouped by their name.
      */
     groupedItems: (state) => {
-      return state.items.reduce((obj, item) => {
+      const groupped = state.items.reduce((obj, item) => {
         // if the item name is not in the object, add it
         obj[item.name] = obj[item.name] || [];
 
@@ -61,6 +61,17 @@ export const useCartStore = defineStore("CartStore", {
         //   ]
         // }
       }, {});
+
+      let sorted = {};
+
+      // [ 'Dried Pineapple', 'Pineapple Gum']
+      Object.keys(groupped)
+        .sort()
+        .forEach((key) => {
+          sorted[key] = groupped[key];
+        });
+
+      return sorted;
     },
 
     /**
@@ -95,7 +106,7 @@ export const useCartStore = defineStore("CartStore", {
      * @param {number} count - The number of items to add.
      * @param {Object} item - The item to add.
      */
-    addItemsToCart(count, item) {
+    addItem(count, item) {
       count = parseInt(count);
 
       for (let i = 0; i < count; i++) {
@@ -105,8 +116,23 @@ export const useCartStore = defineStore("CartStore", {
         });
       }
     },
+    /**
+     * Removes an item from the cart by name.
+     * @param {string} name - The name of the item to remove.
+     */
     removeItem(name) {
       this.items = this.items.filter((item) => item.name !== name);
+    },
+    /**
+     * Updates the item count for a given item in the cart.
+     * @param {number} count - The new count for the item.
+     * @param {object} item - The item to update.
+     */
+    updateItemCount(count, item) {
+      count = parseInt(count);
+
+      this.removeItem(item.name);
+      this.addItem(count, item);
     },
   },
 });

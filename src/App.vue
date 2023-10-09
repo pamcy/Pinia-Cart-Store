@@ -56,7 +56,7 @@ const { products } = storeToRefs(productStore);
         v-for="product in productStore.products"
         :key="product.name"
         :product="product"
-        @add-to-cart="cartStore.addItemsToCart($event, product)"
+        @add-to-cart="cartStore.addItem($event, product)"
       />
     </ul>
   </div>

@@ -110,6 +110,11 @@ export const useCartStore = defineStore("CartStore", {
     addItem(count, item) {
       count = parseInt(count);
 
+      // uncomment the following line to see the error message
+      // check 'App.vue' onError handler on line 38
+
+      // throw new Error("addItem is not implemented yet.");
+
       for (let i = 0; i < count; i++) {
         this.items.push({
           // clone the product object to avoid mutating the original one

@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 import { useAuthUserStore } from "./AuthUserStore";
 
 /**
@@ -144,3 +144,9 @@ export const useCartStore = defineStore("CartStore", {
     },
   },
 });
+
+// enable HMR (Hot Module Replacement) for this store
+// https://pinia.vuejs.org/cookbook/hot-module-replacement.html
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot));
+}

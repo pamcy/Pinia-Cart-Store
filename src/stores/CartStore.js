@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useAuthUserStore } from "./AuthUserStore";
 
 /**
  * A Pinia store for managing the shopping cart.
@@ -133,6 +134,13 @@ export const useCartStore = defineStore("CartStore", {
 
       this.removeItem(item.name);
       this.addItem(count, item);
+    },
+    goCheckout() {
+      const authStore = useAuthUserStore();
+
+      alert(
+        `${authStore.username} just bought ${this.totalCounts} items at a total of $${this.totalPrice}.`
+      );
     },
   },
 });

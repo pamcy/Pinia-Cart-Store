@@ -12,7 +12,8 @@ const productStore = useProductStore();
 const cartStore = useCartStore();
 
 const itemHistory = reactive([]);
-const doingItemHistory = ref(false);
+const futureHistory = reactive([]);
+const doingHistory = ref(false);
 
 // ===== Subscribing to a store's state =====
 // https://pinia.vuejs.org/core-concepts/state.html#Subscribing-to-the-state
@@ -29,17 +30,34 @@ function undo() {
 
   // prevent the $subscribe function from running
   // since we are altering the state of our cartStore in undo, $subscribe function will run again recording a new record in itemHistory
-  doingItemHistory.value = true;
+  doingHistory.value = true;
 
-  // remove the last item from  the itemHistory array
-  itemHistory.pop();
+  // remove the last item from the itemHistory array
+  // and push it to the futureHistory array
+  futureHistory.push(itemHistory.pop());
 
   // apply the previous state to the store
   // reset the cartStore's state to the last element in the itemHistory array
   // cartStore.$state: set the entire state of the store at one time
   cartStore.$state = JSON.parse(itemHistory[itemHistory.length - 1]);
 
-  doingItemHistory.value = false;
+  doingHistory.value = false;
+}
+
+function redo() {
+  const latestState = futureHistory.pop();
+
+  if (!latestState) {
+    return;
+  }
+
+  doingHistory.value = true;
+
+  itemHistory.push(latestState);
+
+  cartStore.$state = JSON.parse(latestState);
+
+  doingHistory.value = false;
 }
 
 // record the initial state of the cartStore outside of the $subscribe function
@@ -59,9 +77,12 @@ cartStore.$subscribe((mutation, state) => {
 
   // state // the current state after the mutations have completed
 
-  if (!doingItemHistory.value) {
+  if (!doingHistory.value) {
     // capture the snapshot of the state by pushing it to the itemHistory array
     itemHistory.push(JSON.stringify(state));
+
+    // clear the futureHistory array
+    futureHistory.splice(0, futureHistory.length);
   }
 });
 
@@ -169,6 +190,7 @@ const { products } = storeToRefs(productStore);
     <TheHeader />
     <div class="mb-5 flex justify-end">
       <AppButton @click="undo">Redo</AppButton>
+      <AppButton class="ml-2" @click="redo">Redo</AppButton>
     </div>
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
       <!-- using the special $event keyword to get the count emitted from the component

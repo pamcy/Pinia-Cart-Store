@@ -20,6 +20,12 @@ export function PiniaHistoryPlugin({
   store, // the store instance
   options, // options passed to the store
 }) {
+  if (!options.historyEnabled) {
+    // enable undo/redo history only in stores that have 'historyEnabled' set to true
+    // that is, only in CartStore
+    return;
+  }
+
   const itemHistory = reactive([]);
   const futureHistory = reactive([]);
   const doingHistory = ref(false);
@@ -53,7 +59,10 @@ export function PiniaHistoryPlugin({
     }
   });
 
+  // Custom properties to be added to the store
   return {
+    itemHistory, // make it visible in the Pinia devtools
+    futureHistory, // make it visible in the Pinia devtools
     undo: () => {
       // if there is only one item in the itemHistory array, there is nothing to undo
       // contains the initial state of the cartStore

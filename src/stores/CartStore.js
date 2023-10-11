@@ -5,6 +5,7 @@ import { useAuthUserStore } from "./AuthUserStore";
  * A Pinia store for managing the shopping cart.
  */
 export const useCartStore = defineStore("CartStore", {
+  historyEnabled: true, // enable undo/redo history in PiniaHistoryPlugin
   state: () => {
     return {
       items: [],

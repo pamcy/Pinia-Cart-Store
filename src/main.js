@@ -11,9 +11,15 @@ import AppButton from "./components/AppButton.vue";
 import AppCountInput from "./components/AppCountInput.vue";
 import AppModalOverlay from "./components/AppModalOverlay.vue";
 
+// Custom Plugins
+import { PiniaHistoryPlugin } from "./plugins/PiniaHistoryPlugin";
+
+const pinia = createPinia();
+pinia.use(PiniaHistoryPlugin);
+
 // Init App
 createApp(App)
-  .use(createPinia())
+  .use(pinia)
   .use(FontAwesomePlugin)
   .component("AppButton", AppButton)
   .component("AppCountInput", AppCountInput)

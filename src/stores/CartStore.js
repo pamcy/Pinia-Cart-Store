@@ -144,6 +144,13 @@ export const useCartStore = defineStore("CartStore", {
       this.removeItem(item.name);
       this.addItem(count, item);
     },
+    clearCart() {
+      // fix the issue of not clearing the cart after using the useLocalStorage composable
+      // https://vueschool.io/lessons/using-composables-in-the-pinia-state
+
+      localStorage.removeItem("CartStore:items");
+      this.$reset(); // this: refers to the cartStore instance
+    },
     goCheckout() {
       const authStore = useAuthUserStore();
 

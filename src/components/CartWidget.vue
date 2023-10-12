@@ -42,7 +42,7 @@ const active = ref(false);
 
             this calls the state() function to create a new state object and replaces the current state with it.
           -->
-          <AppButton class="secondary mr-2" @click="cartStore.$reset()"
+          <AppButton class="secondary mr-2" @click="cartStore.clearCart"
             >Clear Cart</AppButton
           >
           <AppButton class="primary" @click="cartStore.goCheckout"

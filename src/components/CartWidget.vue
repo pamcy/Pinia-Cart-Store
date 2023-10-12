@@ -22,6 +22,8 @@ const active = ref(false);
     <AppModalOverlay :active="active" @close="active = false">
       <div v-if="!cartStore.isCartEmpty">
         <ul class="items-in-cart">
+          <!-- v-for with an Object:
+          https://vuejs.org/guide/essentials/event-handling.html#accessing-event-argument-in-inline-handlers -->
           <CartItem
             v-for="(items, name) in cartStore.groupedItems"
             :key="name"

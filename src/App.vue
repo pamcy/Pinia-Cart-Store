@@ -116,8 +116,7 @@ const { products } = storeToRefs(productStore);
       <AppButton class="ml-2" @click="cartStore.redo">Redo</AppButton>
     </div>
     <ul class="sm:flex flex-wrap lg:flex-nowrap gap-5">
-      <!-- using the special $event keyword to get the count emitted from the component
-      https://v3.vuejs.org/guide/component-custom-events.html#event-names -->
+      <!-- https://vuejs.org/guide/essentials/event-handling.html#accessing-event-argument-in-inline-handlers -->
       <ProductCard
         v-for="product in productStore.products"
         :key="product.name"

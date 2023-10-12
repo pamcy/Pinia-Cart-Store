@@ -4,8 +4,11 @@ import { ref } from "vue";
 import AppCountInput from "./AppCountInput.vue";
 
 // props
-const props = defineProps({
-  product: Object,
+defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
 });
 
 // emits

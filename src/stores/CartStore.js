@@ -10,6 +10,7 @@ export const useCartStore = defineStore("CartStore", {
   historyEnabled: true, // enable undo/redo history in PiniaHistoryPlugin
   state: () => {
     return {
+      // items: []
       items: useLocalStorage("CartStore:items", []),
     };
   },
